@@ -16,6 +16,7 @@ public class ClockDisplay
 {
     private NumberDisplay hours;
     private NumberDisplay minutes;
+    private boolean IsAfternoon;
     private String displayString;    // simulates the actual display
     
     /**
@@ -26,6 +27,7 @@ public class ClockDisplay
     {
         hours = new NumberDisplay(24);
         minutes = new NumberDisplay(60);
+        IsAfternoon = false;
         updateDisplay();
     }
 
@@ -51,6 +53,12 @@ public class ClockDisplay
         if(minutes.getValue() == 0) {  // it just rolled over!
             hours.increment();
         }
+        if (hours.getValue() == 11) {
+            IsAfternoon = !IsAfternoon;
+        }
+        if (hours.getValue() == 0) {
+        IsAfternoon = !IsAfternoon;
+        }
         updateDisplay();
     }
 
@@ -66,7 +74,7 @@ public class ClockDisplay
     }
 
     /**
-     * Return the current time of this display in the format HH:MM.
+     * Return the current time of this display in the format HH:MM AM/PM.
      */
     public String getTime()
     {
@@ -80,5 +88,11 @@ public class ClockDisplay
     {
         displayString = hours.getDisplayValue() + ":" + 
                         minutes.getDisplayValue();
+        if (IsAfternoon == true) {
+            System.out.println("PM");
+        }
+        else if (IsAfternoon == false) {
+            System.out.println("AM");
+        }
     }
 }
